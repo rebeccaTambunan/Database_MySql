@@ -1,0 +1,144 @@
+Microsoft Windows [Version 10.0.17134.648]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\Asus>d:
+
+D:\>cd XAMPP\MySql\bin
+
+D:\xampp\mysql\bin>MySql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 73
+Server version: 10.1.34-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| data_mahasiswa     |
+| employee           |
+| information_schema |
+| latihan01          |
+| mysql              |
+| performance_schema |
+| pet_home           |
+| phpmyadmin         |
+| test               |
++--------------------+
+9 rows in set (0.00 sec)
+
+MariaDB [(none)]> use pet_home;
+Database changed
+MariaDB [pet_home]> show tables;
++--------------------+
+| Tables_in_pet_home |
++--------------------+
+| pet_home           |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [pet_home]> select * from pet_home;
++----------+--------+---------+------+------------+------------+
+| name     | owner  | species | sex  | birth      | death      |
++----------+--------+---------+------+------------+------------+
+| Bowser   | Diane  | Dog     | m    | 1989-08-31 | 1995-07-29 |
+| Buffy    | Harold | Dog     | f    | 1989-05-13 | NULL       |
+| Chirpy   | Gwen   | Bird    | f    | 1998-09-11 | NULL       |
+| Claus    | Gwen   | cat     | m    | 1994-03-17 | NULL       |
+| Fang     | Benny  | Dog     | m    | 0000-00-00 | NULL       |
+| Fluffy   | Harold | cat     | f    | 1993-02-04 | NULL       |
+| Puffhall | Diane  | Hamster | f    | 1999-03-03 | NULL       |
+| Slim     | Benny  | Snake   | m    | 1996-04-29 | NULL       |
+| Whistler | Gwen   | Bird    | NULL | 1997-12-09 | NULL       |
++----------+--------+---------+------+------------+------------+
+9 rows in set (0.03 sec)
+
+MariaDB [pet_home]> select owner, COUNT(species) AS Jumlah from pet_home GROUP BY owner;
++--------+--------+
+| owner  | Jumlah |
++--------+--------+
+| Benny  |      2 |
+| Diane  |      2 |
+| Gwen   |      3 |
+| Harold |      2 |
++--------+--------+
+4 rows in set (0.00 sec)
+
+MariaDB [pet_home]> select species, COUNT(species) AS Jumlah from pet_home GROUP BY species;
++---------+--------+
+| species | Jumlah |
++---------+--------+
+| Bird    |      2 |
+| cat     |      2 |
+| Dog     |      3 |
+| Hamster |      1 |
+| Snake   |      1 |
++---------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [pet_home]> select sex, COUNT(species) AS Jumlah from pet_home GROUP BY species;
++------+--------+
+| sex  | Jumlah |
++------+--------+
+| f    |      2 |
+| m    |      2 |
+| m    |      3 |
+| f    |      1 |
+| m    |      1 |
++------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [pet_home]> select sex, COUNT(species) AS Jumlah from pet_home GROUP BY sex;
++------+--------+
+| sex  | Jumlah |
++------+--------+
+| NULL |      1 |
+| f    |      4 |
+| m    |      4 |
++------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [pet_home]> select sex, species, COUNT(species) AS Jumlah from pet_home GROUP BY sex, species;
++------+---------+--------+
+| sex  | species | Jumlah |
++------+---------+--------+
+| NULL | Bird    |      1 |
+| f    | Bird    |      1 |
+| f    | cat     |      1 |
+| f    | Dog     |      1 |
+| f    | Hamster |      1 |
+| m    | cat     |      1 |
+| m    | Dog     |      2 |
+| m    | Snake   |      1 |
++------+---------+--------+
+8 rows in set (0.00 sec)
+
+MariaDB [pet_home]> select sex, species, COUNT(species) AS Jumlah from pet_home where species = 'cat' or species = 'dog' GROUP BY sex, species;
++------+---------+--------+
+| sex  | species | Jumlah |
++------+---------+--------+
+| f    | cat     |      1 |
+| f    | Dog     |      1 |
+| m    | cat     |      1 |
+| m    | Dog     |      2 |
++------+---------+--------+
+4 rows in set (0.00 sec)
+
+MariaDB [pet_home]> select sex, species from pet_home where sex is not NULL GROUP BY sex, species;
++------+---------+
+| sex  | species |
++------+---------+
+| f    | Bird    |
+| f    | cat     |
+| f    | Dog     |
+| f    | Hamster |
+| m    | cat     |
+| m    | Dog     |
+| m    | Snake   |
++------+---------+
+7 rows in set (0.00 sec)
+
+MariaDB [pet_home]>
